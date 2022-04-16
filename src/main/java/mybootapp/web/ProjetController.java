@@ -42,7 +42,7 @@ public class ProjetController {
         Groupe groupe = new Groupe("group"+groupRepository.findAll().size());
         groupRepository.save(groupe);
         var groups = groupRepository.findAll();
-        return new ModelAndView("home", "groups", groupe);
+        return new ModelAndView("home", "groups", groups);
     }
 
     @RequestMapping(value = "/plus10", method = RequestMethod.GET)
