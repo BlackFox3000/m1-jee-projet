@@ -22,16 +22,15 @@
     <body>
      <div>
          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-           <a class="navbar-brand" href="/projet/auth">se connecter</a>
+           <a class="navbar-brand" href="/projet/auth">Se connecter</a>
            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
              <span class="navbar-toggler-icon"></span>
            </button>
            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
              <div class="navbar-nav">
                <a class="nav-item nav-link active" href="/projet/home">Accueil<span class="sr-only">(current)</span></a>
-               <a class="nav-item nav-link" href="/projet/groupCreate">Créer un groupe</a>
-               <a class="nav-item nav-link" href="/projet/personCreate">Créer une personne</a>
-               <a class="nav-item nav-link disabled" href="#">Se déconnecter</a>
+               <a class="nav-item nav-link" href="/projet/groupCreate">Nouveau groupe</a>
+               <a class="nav-item nav-link" href="/projet/personCreate">Nouvelle personne</a>
              </div>
            </div>
          </nav>
