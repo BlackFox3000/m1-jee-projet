@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: mybootapp.test.GroupeTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.795 s - in mybootapp.test.GroupeTest
