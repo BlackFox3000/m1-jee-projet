@@ -9,7 +9,7 @@
                     <table class="table table-hover">
                         <c:forEach items="${groups}" var="group">
                             <tr>
-                                <td><a href="detail/${group.id}">
+                                <td><a href="groupDetail/${group.id}">
                                     <c:out value="${group.name}" />
                                 </a></td>
                             </tr>
@@ -24,7 +24,7 @@
                             <table class="table table-hover">
                                 <c:forEach items="${persons}" var="person">
                                     <tr>
-                                        <td><a href="detail/${person.id}">
+                                        <td><a href="personDetail/${person.id}">
                                             <c:out value="${person.firstname} ${person.lastname}" />
                                         </a></td>
                                     </tr>

@@ -49,8 +49,6 @@ public interface PersonRepository extends JpaRepository<Person, Integer>, JpaSpe
 		T entity = em.find(clazz, id);
 		if (entity == null)
 			System.err.println("Entity not found.");
-		else
-			System.err.println("Entity found.");
 
 		return entity;
 	}

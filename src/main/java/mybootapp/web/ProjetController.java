@@ -69,10 +69,24 @@ public class ProjetController {
         return model;
     }
 
-    @RequestMapping(value = "/detail/{param}", method = RequestMethod.GET)
-    public ModelAndView detail(   @PathVariable("param") Integer id) {
+    @RequestMapping(value = "/groupDetail/{param}", method = RequestMethod.GET)
+    public ModelAndView groupDetail(   @PathVariable("param") Integer id) {
         Groupe group = groupRepository.getById(id.longValue());
         return new ModelAndView("groupDetail", "persons", group.getPersons());
+    }
+
+    @RequestMapping(value = "/personDetail/{param}", method = RequestMethod.GET)
+    public ModelAndView personDetail(   @PathVariable("param") Integer id) {
+        //Ajouter son groupe
+        var person = personRepository.getById(id);
+        return new ModelAndView("personDetail", "person", person);
+    }
+
+    @RequestMapping(value = "/personForm/{param}", method = RequestMethod.GET)
+    public ModelAndView personForm(   @PathVariable("param") Integer id) {
+        //Ajouter son groupe
+        var person = personRepository.getById(id);
+        return new ModelAndView("personForm", "person", person);
     }
 
     @RequestMapping(value = "/voir/{param}", method = RequestMethod.GET)
@@ -83,11 +97,10 @@ public class ProjetController {
 
     @RequestMapping(value = "/matrix/{param}", method = RequestMethod.GET)
     @ResponseBody
-    public String testMatrix(//
-                             @PathVariable("param") String param, //
-                             @MatrixVariable( defaultValue = "A") String a, //
-                             @MatrixVariable(name = "b", defaultValue = "1") Integer b//
-    ) {
+    public String testMatrix(@PathVariable("param") String param,
+                             @MatrixVariable( defaultValue = "A") String a,
+                             @MatrixVariable(name = "b", defaultValue = "1") Integer b)
+    {
         return String.format("param=%s, a=%s, b=%d", param, a, b);
     }
 

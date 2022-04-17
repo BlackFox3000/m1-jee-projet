@@ -24,7 +24,7 @@ public class Person implements Serializable{
 	@Id
 	// Use the sequence that is defined above:
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq")
-	private long 	id;
+	private int id;
 
 	@NotNull(message = "Le lastname est obligatoire!")
 	private String lastname;
@@ -71,7 +71,7 @@ public class Person implements Serializable{
 
 	public long getId() { return id; }
 
-	public void setId(Long id) { this.id = id; }
+	public void setId(int id) { this.id = id; }
 
 	public String getLastname() { return lastname; }
 
