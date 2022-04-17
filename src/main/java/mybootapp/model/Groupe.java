@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Data
@@ -29,6 +30,7 @@ public class Groupe implements Serializable{
 	public Groupe(String name) {
 		super();
 		this.name = name;
+		this.persons = new ArrayList<>();
 	}
 
 	public long getId() {
