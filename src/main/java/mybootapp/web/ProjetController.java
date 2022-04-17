@@ -39,7 +39,7 @@ public class ProjetController {
 
     @RequestMapping(value = "/addgroup", method = RequestMethod.GET)
     public ModelAndView addGroup(HttpSession session) {
-        Groupe groupe = new Groupe("group"+groupRepository.findAll().size());
+        Groupe groupe = new Groupe("group"+(groupRepository.findAll().size()+1));
         groupRepository.save(groupe);
         var groups = groupRepository.findAll();
         return new ModelAndView("home", "groups", groups);

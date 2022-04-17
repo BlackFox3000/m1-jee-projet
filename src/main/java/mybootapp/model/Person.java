@@ -1,5 +1,6 @@
 package mybootapp.model;
 
+import lombok.Data;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -7,9 +8,11 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
+
 
 @Entity
+@Data
 //Define a sequence - might also be in another class:
 @SequenceGenerator(name="seq", initialValue=17028432, allocationSize=100)
 @Component()
