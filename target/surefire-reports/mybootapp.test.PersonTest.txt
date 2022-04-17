@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: mybootapp.test.PersonTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.033 s <<< FAILURE! - in mybootapp.test.PersonTest
+getAll  Time elapsed: 0.006 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <Person(id=17028432, lastname=tintorri, firstname=foren, email=flo@mail.com, website=flo.com, birthdate=3910-06-07, groupe=null)> but was: <Person(id=17028434, lastname=tintorri, firstname=foren, email=flo@mail.com, website=flo.com, birthdate=3910-06-07, groupe=null)>
+	at mybootapp.test.PersonTest.getAll(PersonTest.java:53)
+
+testCreate  Time elapsed: 0.001 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <Person(id=17028435, lastname=tintorri, firstname=foren, email=flo@mail.com, website=flo.com, birthdate=3910-06-07, groupe=null)> but was: <Person(id=17028437, lastname=dia, firstname=hamoydy, email=dia@mail.com, website=dia.com, birthdate=3910-09-05, groupe=null)>
+	at mybootapp.test.PersonTest.testCreate(PersonTest.java:43)
+
