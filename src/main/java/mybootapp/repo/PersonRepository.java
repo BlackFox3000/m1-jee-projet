@@ -7,22 +7,26 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
+@Repository
+@Transactional
 public interface PersonRepository extends JpaRepository<Person, Integer>, JpaSpecificationExecutor<Person> {
 
 	@Query("SELECT p FROM Person p WHERE p.lastname LIKE :lastnameKey")
 	Page<Person> findByLastname(@Param("lastnameKey") String lastnameP, Pageable pageable);
 	
 	@Query("SELECT p FROM Person p JOIN p.groupe WHERE p.groupe.id = :idKey")
-	public static Page<Person> findByIdGroupe(@Param("idKey") long IdGoupe, Pageable pageable) {
+	static Page<Person> findByIdGroupe(@Param("idKey") long IdGoupe, Pageable pageable) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Query("SELECT p FROM Person p LEFT JOIN p.group WHERE p.group.id = :idKey AND p.lastname LIKE :lastnameKey")
-	public static Page<Person> findByIdGroupeAndPersonLastname(@Param("idKey") long IdGoupe, @Param("lastnameKey") String lastnamePerson, Pageable pageable) {
+	static Page<Person> findByIdGroupeAndPersonLastname(@Param("idKey") long IdGoupe, @Param("lastnameKey") String lastnamePerson, Pageable pageable) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -40,7 +44,8 @@ public interface PersonRepository extends JpaRepository<Person, Integer>, JpaSpe
 			@Param("idGroupeKey") int idGroupe, @Param("idKey") int id, Pageable pageable);*/
 
 	EntityManager em = null;
-	public default <T> T find(Class<T> clazz, Object id) {
+	default <T> T find(Class<T> clazz, Object id) {
+		assert false;
 		T entity = em.find(clazz, id);
 		if (entity == null)
 			System.err.println("Entity not found.");
@@ -50,7 +55,8 @@ public interface PersonRepository extends JpaRepository<Person, Integer>, JpaSpe
 		return entity;
 	}
 
-	public default <T> T update(T entity) {
+	default <T> T update(T entity) {
+		assert false;
 		entity = em.merge(entity);
 		System.err.println("Entity updated.");
 		return entity;

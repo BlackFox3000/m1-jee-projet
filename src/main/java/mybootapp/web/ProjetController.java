@@ -1,12 +1,14 @@
 package mybootapp.web;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import mybootapp.model.Groupe;
+import mybootapp.model.Person;
 import mybootapp.repo.GroupRepository;
+import mybootapp.repo.PersonRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +27,22 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/projet")
 public class ProjetController {
 
-    protected final Log logger = (Log) LogFactory.getLog(getClass());
+    protected final Log logger = LogFactory.getLog(getClass());
 
     @Autowired
     GroupRepository groupRepository;
+
+    @Autowired
+    PersonRepository personRepository;
 
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public ModelAndView printHome() {
         var groups = groupRepository.findAll();
-        return new ModelAndView("home", "groups", groups);
+        var persons = personRepository.findAll();
+        ModelAndView model =  new ModelAndView("home", "groups", groups);
+        model.addObject("persons",persons);
+        return model;
     }
 
     @RequestMapping(value = "/addgroup", method = RequestMethod.GET)
@@ -42,20 +50,31 @@ public class ProjetController {
         Groupe groupe = new Groupe("group"+(groupRepository.findAll().size()+1));
         groupRepository.save(groupe);
         var groups = groupRepository.findAll();
-        return new ModelAndView("home", "groups", groups);
-    }
-
-    @RequestMapping(value = "/plus10", method = RequestMethod.GET)
-    public ModelAndView plus10(
-            @RequestParam(value = "num", defaultValue = "100") Integer value,
-            @RequestParam("date") @DateTimeFormat(pattern="dd.MM.yyyy")Date date) {
-
-        logger.info("Running plus10 controler with param = " + value);
-
-        ModelAndView model = new ModelAndView("hello", "now", value + 10);
-        model.addObject("date", date);
+        var persons = personRepository.findAll();
+        ModelAndView model =  new ModelAndView("home", "groups", groups);
+        model.addObject("persons",persons);
         return model;
     }
+
+    @RequestMapping(value = "/addperson", method = RequestMethod.GET)
+    public ModelAndView addPerson(HttpSession session) {
+        String firstname = "firstname"+personRepository.findAll().size();
+        String lastname = "lastname"+personRepository.findAll().size();
+        Person person = new Person(lastname,firstname,firstname+"."+lastname+"@mail.com",firstname+"."+lastname+".com", new Date(System.currentTimeMillis()));
+        personRepository.save(person);
+        var groups = groupRepository.findAll();
+        var persons = personRepository.findAll();
+        ModelAndView model =  new ModelAndView("home", "groups", groups);
+        model.addObject("persons",persons);
+        return model;
+    }
+
+    @RequestMapping(value = "/detail/{param}", method = RequestMethod.GET)
+    public ModelAndView detail(   @PathVariable("param") Integer id) {
+        Groupe group = groupRepository.getById(id.longValue());
+        return new ModelAndView("groupDetail", "persons", group.getPersons());
+    }
+
     @RequestMapping(value = "/voir/{param}", method = RequestMethod.GET)
     public ModelAndView voir(@PathVariable("param") Integer param) {
         logger.info("Running param controler with param=" + param);
