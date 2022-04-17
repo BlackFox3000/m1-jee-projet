@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import mybootapp.model.Groupe;
 import mybootapp.model.Person;
@@ -14,12 +15,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.MatrixVariable;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -69,6 +66,17 @@ public class ProjetController {
         return model;
     }
 
+    @RequestMapping(value = "/createPerson", method = RequestMethod.GET)
+    public ModelAndView createPerson() {
+        return new ModelAndView("personForm");
+    }
+
+    @RequestMapping(value = "/createGroup", method = RequestMethod.GET)
+    public ModelAndView createGroup() {
+        return new ModelAndView("groupForm");
+    }
+
+
     @RequestMapping(value = "/groupDetail/{param}", method = RequestMethod.GET)
     public ModelAndView groupDetail(   @PathVariable("param") Integer id) {
         Groupe group = groupRepository.getById(id.longValue());
@@ -86,32 +94,39 @@ public class ProjetController {
     public ModelAndView personForm(   @PathVariable("param") Integer id) {
         //Ajouter son groupe
         var person = personRepository.getById(id);
-        return new ModelAndView("personForm", "person", person);
+        ModelAndView modelAndView = new ModelAndView("personForm", "person", person);
+        var groups = groupRepository.findAll();
+        System.out.println("Groupe " + groups.size());
+        System.out.println("person"+person.getFirstname());
+        modelAndView.addObject("groups",groups);
+        return modelAndView;
     }
 
-    @RequestMapping(value = "/voir/{param}", method = RequestMethod.GET)
-    public ModelAndView voir(@PathVariable("param") Integer param) {
-        logger.info("Running param controler with param=" + param);
-        return new ModelAndView("hello", "now", param);
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public ModelAndView saveProduct(@ModelAttribute @Valid Person p, BindingResult result) {
+        validator.validate(p, result);
+        System.out.println("testtttt");
+        personRepository.save(p);
+        var groups = groupRepository.findAll();
+        var persons = personRepository.findAll();
+        ModelAndView model =  new ModelAndView("home", "groups", groups);
+        model.addObject("persons",persons);
+        return model;
     }
 
-    @RequestMapping(value = "/matrix/{param}", method = RequestMethod.GET)
-    @ResponseBody
-    public String testMatrix(@PathVariable("param") String param,
-                             @MatrixVariable( defaultValue = "A") String a,
-                             @MatrixVariable(name = "b", defaultValue = "1") Integer b)
+    @Autowired
+    PersonValidator validator;
+
+    @ModelAttribute
+    public Person newOrEditPerson(
+            @RequestParam(value = "id", required = false) String idPerson)
     {
-        return String.format("param=%s, a=%s, b=%d", param, a, b);
+        if (idPerson != null) {
+            var p = personRepository.findById(Integer.parseInt(idPerson));
+            return p.get();
+        }
+        return null;
     }
 
-    @RequestMapping(value = "/matrix1/{param}", method = RequestMethod.GET)
-    @ResponseBody
-    public String testMatrix1(//
-                              @PathVariable("param") String param, //
-                              @MatrixVariable( defaultValue = "A") Map<String,String> map){//
-
-        return String.format("param=%s", map);
-
-    }
 
 }

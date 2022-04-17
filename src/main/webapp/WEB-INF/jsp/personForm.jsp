@@ -5,7 +5,7 @@
 <div class="container">
     <h1>Editer une personne </h1>
 
-    <form:form method="POST" modelAttribute="person">
+    <form:form method="POST" modelAttribute="person" action="/projet/edit?id=${person.id}">
 
         <form:errors path="*" cssClass="alert alert-danger" element="div" />
 
@@ -40,26 +40,21 @@
         </div>
 
         <div class="form-group">
+		    <label for="group">Type:</label>
+		    <form:select path="group" multiple="false" class="form-control">
+		        <form:option value="" label="--- Select ---" />
+		        <c:forEach items="${groups}" var="group">
+		            <option value="${group.id}">${group.name}<option/>
+		        </c:forEach>
+		    </form:select>
+		    <form:errors path="group" cssClass="alert alert-warning"
+		        element="div" />
+		</div>
+
+        <div class="form-group">
             <button type="submit" class="btn btn-info">Submit</button>
         </div>
 
-        <div class="form-group">
-		    <label for="type">Type:</label>
-		    <form:select path="type" multiple="false" class="form-control">
-		        <form:option value="" label="--- Select ---" />
-		        <form:options items="${productTypes}" />
-		    </form:select>
-		    <form:errors path="type" cssClass="alert alert-warning"
-		        element="div" />
-		</div>
-
-		<div class="form-group">
-		    <label for="code">Code:</label>
-		    <form:input path="code.base" class="form-control"/>
-		    <form:input path="code.number" class="form-control"/>
-		    <form:errors path="code" cssClass="alert alert-warning"
-		        element="div" />
-		</div>
     </form:form>
 </div>
 

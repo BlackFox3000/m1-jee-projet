@@ -8,8 +8,8 @@
         <table class="table table-hover">
             <c:forEach items="${persons}" var="person">
                 <tr>
-                    <td><a href="?id=${person.id}">
-                        <c:out value="${person.FirstName}" />
+                    <td><a href="/projet/personDetail/${person.id}">
+                        <c:out value="${person.firstname} ${person.lastname}" />
                     </a></td>
                 </tr>
             </c:forEach>
