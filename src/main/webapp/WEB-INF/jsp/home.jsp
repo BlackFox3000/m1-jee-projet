@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 
   <div class="container">
-    <h1>Accueil - Projet Spring Application</h1>
+    <h1>Accueil - Annuaire AMU</h1>
 
 	<div class="container">
         <div class="groupes">
